@@ -24,3 +24,10 @@ spec:
                 name: category-service
                 port:
                   number: 6002
+          - path: /user
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service
+                port:
+                  number: 6001
