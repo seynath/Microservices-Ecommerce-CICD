@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-config
+data:
+  CATEGORY_SERVICE_URL: "http://category-service:6002/category"
+  CATEGORY_GRPC_ADDRESS: "category-service:50051"

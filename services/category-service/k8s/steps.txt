@@ -1,0 +1,14 @@
+
+####Move to Kind Cluster from docker desktop####
+kind load docker-image category-service:latest --name kind
+
+kubectl logs category-service-5cd96b948b-gn97p
+
+kubectl apply -f secret.yaml
+kubectl apply -f configmap.yaml
+kubectl apply -f category-deployment.yaml
+
+
+kubectl get service category-service
+kubectl describe service category-service
+

@@ -1,0 +1,109 @@
+ecommerce-ci-cd/
+├── services/
+│   ├── product-service/
+│   │   ├── Dockerfile
+│   │   ├── k8s/
+│   │   │   ├── deployment.yaml
+│   │   │   ├── service.yaml
+│   │   │   └── configmap.yaml
+│   │   ├── tests/
+│   │   │   ├── unit/
+│   │   │   ├── integration/
+│   │   │   └── e2e/
+│   │   ├── src/ (optional if containing app code)
+│   │   └── README.md
+│   ├── category-service/
+│   │   ├── Dockerfile
+│   │   ├── k8s/
+│   │   │   ├── deployment.yaml
+│   │   │   ├── service.yaml
+│   │   │   └── configmap.yaml
+│   │   ├── tests/
+│   │   │   ├── unit/
+│   │   │   ├── integration/
+│   │   │   └── e2e/
+│   │   ├── src/ (optional if containing app code)
+│   │   └── README.md
+│   └── other-services/
+│       └── ... (similar structure as above)
+│
+├── infrastructure/
+│   ├── k8s/
+│   │   ├── namespace.yaml
+│   │   ├── ingress.yaml
+│   │   ├── secrets/
+│   │   │   ├── db-secrets.yaml
+│   │   │   └── api-secrets.yaml
+│   │   └── storage/
+│   │       ├── pv.yaml
+│   │       └── pvc.yaml
+│   ├── terraform/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   ├── outputs.tf
+│   │   └── README.md
+│   ├── ansible/
+│   │   ├── playbooks/
+│   │   ├── roles/
+│   │   └── inventory/
+│   └── README.md
+│
+├── pipelines/
+│   ├── jenkins/
+│   │   ├── Jenkinsfile
+│   │   └── scripts/
+│   │       ├── build.sh
+│   │       ├── test.sh
+│   │       └── deploy.sh
+│   ├── github-actions/
+│   │   ├── workflows/
+│   │   │   ├── build.yaml
+│   │   │   ├── test.yaml
+│   │   │   └── deploy.yaml
+│   └── gitlab-ci/
+│       └── .gitlab-ci.yml
+│
+├── monitoring/
+│   ├── prometheus/
+│   │   ├── prometheus-config.yaml
+│   │   └── alerts.yaml
+│   ├── grafana/
+│   │   ├── dashboards/
+│   │   ├── datasources/
+│   │   └── grafana.ini
+│   └── logs/
+│       ├── fluentd-config.yaml
+│       └── README.md
+│
+├── testing/
+│   ├── load-testing/
+│   │   ├── locust/
+│   │   │   └── locustfile.py
+│   │   └── jmeter/
+│   │       └── test-plan.jmx
+│   └── security-testing/
+│       └── zap-scripts/
+│           └── zap-config.yaml
+│
+├── scripts/
+│   ├── db-migrations/
+│   │   ├── product-service.sql
+│   │   ├── category-service.sql
+│   │   └── README.md
+│   └── helper-scripts/
+│       ├── cleanup.sh
+│       ├── start-services.sh
+│       └── stop-services.sh
+│
+├── docs/
+│   ├── architecture/
+│   │   ├── microservices-architecture.png
+│   │   ├── API-design.md
+│   │   └── service-dependencies.md
+│   ├── CI-CD-process.md
+│   ├── setup-guide.md
+│   └── README.md
+│
+├── .gitignore
+├── README.md
+└── LICENSE

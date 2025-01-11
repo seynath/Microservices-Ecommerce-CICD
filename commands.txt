@@ -1,0 +1,3 @@
+kubectl describe pod {{pod_id}}
+
+kubectl logs category-service-c6f68974c-t8f8l

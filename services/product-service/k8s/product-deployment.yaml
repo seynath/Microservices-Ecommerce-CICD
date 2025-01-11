@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: seynath/product-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6003
+              name: http
+          env:
+            - name: PORT
+              value: "6003"
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: product-secret
+                  key: MONGO_URI
+            - name: CATEGORY_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: product-config
+                  key: CATEGORY_SERVICE_URL
+            - name: CATEGORY_GRPC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: product-config
+                  key: CATEGORY_GRPC_ADDRESS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  selector:
+    app: product-service
+  ports:
+    - protocol: TCP
+      port: 6003
+      targetPort: 6003
+      name: http

@@ -1,0 +1,117 @@
+# category-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: category-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: category-service
+  template:
+    metadata:
+      labels:
+        app: category-service
+    spec:
+      containers:
+        - name: category-service
+          image: seynath/category-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6002
+              # targetPort: 6002
+              name: http
+            - containerPort: 50051
+              # targetPort: 50051
+              name: grpc
+
+          env:
+            - name: PORT
+              value: "6002"
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: category-secret
+                  key: MONGO_URI
+            - name: CATEGORY_GRPC_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: category-config
+                  key: CATEGORY_GRPC_PORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: category-service
+spec:
+  selector:
+    app: category-service
+  ports:
+    - protocol: TCP
+      port: 6002
+      targetPort: 6002
+      name: http
+    - protocol: TCP
+      port: 50051
+      targetPort: 50051
+      name: grpc
+
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: category-service
+#   labels:
+#     app: category-service
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: category-service
+#   template:
+#     metadata:
+#       labels:
+#         app: category-service
+#     spec:
+#       containers:
+#       - name: category-service
+#         image: category-service:latest
+#         imagePullPolicy: Never
+#         ports:
+#         - containerPort: 50051 # gRPC Port
+#         - containerPort: 6002 # HTTP Port
+#         env:
+#         - name: PORT
+#           valueFrom:
+#             configMapKeyRef:
+#               name: category-service-config
+#               key: PORT
+#         - name: CATEGORY_GRPC_ADDRESS_PORT
+#           valueFrom:
+#             configMapKeyRef:
+#               name: category-service-config
+#               key: CATEGORY_GRPC_ADDRESS_PORT
+#         - name: MONGO_URI
+#           valueFrom:
+#             secretKeyRef:
+#               name: category-service-secrets
+#               key: MONGO_URI
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: category-service
+# spec:
+#   selector:
+#     app: category-service
+#   type: LoadBalancer
+#   ports:
+#   - name: grpc
+#     protocol: TCP
+#     port: 50051
+#     targetPort: 50051
+#   - name: http
+#     protocol: TCP
+#     port: 6002
+#     targetPort: 6002
