@@ -3,6 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ecommerce-ingress
+  namespace: default
   annotations:
 spec:
   ingressClassName: nginx
